@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legacy Outfits - Official Portal</title>
+    <style>
+        :root {
+            --gold: #D4AF37; 
+            --dark-gold: #B8860B;
+            --primary: #1a1a1a; 
+            --white: #ffffff;
+            --bg: #f4f4f4;
+        }
+
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background-color: var(--bg); color: #333; scroll-behavior: smooth; }
+        
+        /* Navigation */
+        nav { 
+            background: var(--primary); 
+            border-bottom: 3px solid var(--gold);
+            color: var(--gold); 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 10px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .brand-name { font-weight: 800; letter-spacing: 1px; font-size: 1.2rem; color: var(--gold); }
+        .brand-logo { height: 45px; width: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
+        .menu-toggle { font-size: 1.5rem; cursor: pointer; color: var(--gold); }
+
+        .cart-icon {
+            cursor: pointer;
+            font-size: 1.1rem;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 8px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .cart-count { background: #ff3e3e; color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; font-weight: bold; margin-left: 5px; }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; left: -300px; top: 0; width: 280px; height: 100%;
+            background: var(--primary); box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+            transition: 0.4s ease; z-index: 3000; padding: 20px;
+        }
+        .sidebar.active { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; color: var(--gold); }
+        .sidebar-links { list-style: none; padding: 0; }
+        .sidebar-links li { margin-bottom: 10px; }
+        .sidebar-links a { text-decoration: none; color: var(--gold); font-weight: 600; display: block; padding: 12px; border-radius: 5px; transition: 0.3s; }
+        .sidebar-links a:hover { background: var(--gold); color: var(--primary); }
+
+        /* Hero */
+        .hero { background: var(--white); padding: 40px 5%; text-align: center; border-bottom: 1px solid #ddd; }
+        .hero h1 { margin: 0; font-size: 2rem; color: var(--primary); }
+
+        /* Product Grid */
+        .container { padding: 20px 5%; }
+        .product-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 15px; 
+        }
+        @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
+        .card:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .details { padding: 15px; text-align: center; }
+        .price { font-size: 1.1rem; font-weight: 800; color: var(--dark-gold); margin: 8px 0; }
+        
+        .btn-add { 
+            background: var(--gold); color: var(--primary); border: none; 
+            padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold; 
+        }
+
+        /* Cart Sidebar */
+        #cart-sidebar {
+            position: fixed; right: -400px; top: 0; width: 320px; height: 100%;
+            background: var(--white); box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+            transition: 0.4s; z-index: 4000; padding: 25px; display: flex; flex-direction: column;
+        }
+        #cart-sidebar.active { right: 0; }
+        .btn-checkout { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+
+        #overlay { position: fixed; display: none; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; }
+        #overlay.active { display: block; }
+        
+        footer { background: var(--primary); color: var(--gold); padding: 30px; text-align: center; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+            <div class="logo-container">
+                <span class="brand-name">LEGACY OUTFIT</span>
+                <img src="logo.jpg" alt="Logo" class="brand-logo">
+            </div>
+        </div>
+        <div class="cart-icon" onclick="toggleCart()">
+            🛒 <span class="cart-count" id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <div id="side-menu" class="sidebar">
+        <div class="sidebar-header">
+            <h3>LEGACY MENU</h3>
+            <span style="cursor:pointer; font-size:1.5rem" onclick="toggleSidebar()">&times;</span>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="#" onclick="toggleSidebar()">Nyumbani</a></li>
+            <li><a href="#suti" onclick="toggleSidebar()">Suti za Kiume</a></li>
+            <li><a href="#casual" onclick="toggleSidebar()">Casual Wear</a></li>
+            <li><a href="#shoes" onclick="toggleSidebar()">Viatu</a></li>
+            <hr style="border: 0.5px solid var(--gold); opacity: 0.2;">
+           <li>
+    <a href="javascript:void(0)" onclick="contactSupport()">Msaada / Contact</a>
+</li>
+        </ul>
+    </div>
+
+    <div id="overlay" onclick="toggleSidebar()"></div>
+
+    <div id="cart-sidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #eee; padding-bottom:10px;">
+            <h3>Kikapu Chako</h3>
+            <span style="cursor:pointer; color:red" onclick="toggleCart()">Funga &times;</span>
+        </div>
+        <div id="cart-items-list" style="flex-grow:1; overflow-y:auto; padding:10px 0;"></div>
+        <div class="total-price" id="cart-total" style="font-size:1.2rem; text-align:center; border-top:1px solid #eee; padding-top:10px;">Jumla: TZS 0</div>
+        <button class="btn-checkout" onclick="sendToWhatsApp()">Tuma Oda WhatsApp</button>
+    </div>
+
+    <section class="hero">
+        <h1>Vaa Kijanja na Legacy Outfits</h1>
+        <p>Fashion ya Kifahari kwa Bei Nafuu.</p>
+    </section>
+
+    <div class="container">
+        <h2 id="suti" style="color:var(--primary); border-left: 5px solid var(--gold); padding-left: 10px;">SUTI ZA KIUME</h2>
+        <div class="product-grid" id="suti-list"></div>
+
+        <h2 id="casual" style="color:var(--primary); border-left: 5px solid var(--gold); padding-left: 10px; margin-top: 40px;">CASUAL WEAR</h2>
+        <div class="product-grid" id="casual-list"></div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Legacy Outfits | Arusha, Tanzania</p>
+    </footer>
+
+    <script>
+        const products = [
+            { id: 1, name: "Suti ya Harusi (Slim Fit)", price: 250000, img: "sutinyeusi.jpg", grid: "suti-list" },
+            { id: 2, name: "Suti ya Kijivu", price: 180000, img: "sutiyakijivu.jpg", grid: "suti-list" },
+            { id: 3, name: "T-Shirt ya Polo", price: 35000, img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500", grid: "casual-list" },
+            { id: 4, name: "Raba za Nike (Air)", price: 120000, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", grid: "casual-list" }
+        ];
+
+        let cart = [];
+
+        function displayProducts() {
+            products.forEach(p => {
+                const target = document.getElementById(p.grid);
+                if(target) {
+                    target.innerHTML += `
+                        <div class="card">
+                            <img src="${p.img}" alt="${p.name}">
+                            <div class="details">
+                                <h3>${p.name}</h3>
+                                <p class="price">TZS ${p.price.toLocaleString()}</p>
+                                <button class="btn-add" onclick="addToCart(${p.id})">Weka Kikapuni</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+        displayProducts();
+
+        function toggleSidebar() {
+            document.getElementById('side-menu').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('active');
+        }
+
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            cart.push(item);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const listEl = document.getElementById('cart-items-list');
+            listEl.innerHTML = "";
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                listEl.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; background:#f9f9f9; padding:8px; margin-bottom:5px; border-radius:5px; font-size:0.8rem">
+                        <span>${item.name}</span>
+                        <span style="color:red; cursor:pointer" onclick="removeFromCart(${index})">Ondoa</span>
+                    </div>`;
+            });
+            document.getElementById('cart-total').innerText = `Jumla: TZS ${total.toLocaleString()}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function sendToWhatsApp() {
+            if (cart.length === 0) return alert("Kikapu kiko wazi!");
+            let items = cart.map((item, i) => `${i+1}. *${item.name}* (TZS ${item.price.toLocaleString()})`).join('\n');
+            let total = cart.reduce((s, i) => s + i.price, 0);
+            const msg = encodeURIComponent(`*ODA MPYA - LEGACY OUTFIT*\n\n${items}\n\n*JUMLA: TZS ${total.toLocaleString()}*\n\nJe, hizi zinapatikana?`);
+            window.open(`https://wa.me/255680558422?text=${msg}`, '_blank');
+        }
+        function contactSupport() {
+    const myPhone = "255680558422"; // Namba yako ya duka
+    const message = encodeURIComponent("Habari Legacy Outfit, nahitaji msaada kuhusu bidhaa zenu.");
+    
+    // Inafunga sidebar kwanza kabla ya kufungua WhatsApp
+    toggleSidebar(); 
+    
+    // Inafungua WhatsApp
+    window.open(`https://wa.me/${myPhone}?text=${message}`, '_blank');
+}
+    </script>
+</body>
+</html>
