@@ -11,11 +11,12 @@
             --primary: #1a1a1a; 
             --white: #ffffff;
             --bg: #f4f4f4;
+            --amazon-blue: #232f3e;
+            --panel-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
         body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; background-color: var(--bg); color: #333; scroll-behavior: smooth; }
         
-        /* Navigation */
         nav { 
             background: var(--primary); 
             border-bottom: 3px solid var(--gold);
@@ -32,7 +33,6 @@
         .logo-container { display: flex; align-items: center; gap: 12px; }
         .brand-name { font-weight: 800; letter-spacing: 1px; font-size: 1.2rem; color: var(--gold); }
         .brand-logo { height: 45px; width: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold); }
-        .menu-toggle { font-size: 1.5rem; cursor: pointer; color: var(--gold); }
 
         .cart-icon {
             cursor: pointer;
@@ -46,63 +46,121 @@
 
         .cart-count { background: #ff3e3e; color: white; border-radius: 50%; padding: 2px 7px; font-size: 12px; font-weight: bold; margin-left: 5px; }
 
-        /* Sidebar */
-        .sidebar {
-            position: fixed; left: -300px; top: 0; width: 280px; height: 100%;
-            background: var(--primary); box-shadow: 5px 0 15px rgba(0,0,0,0.3);
-            transition: 0.4s ease; z-index: 3000; padding: 20px;
+        .category-nav {
+            background: var(--amazon-blue);
+            padding: 10px 5%;
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-bottom: 2px solid var(--gold);
+            position: sticky;
+            top: 68px;
+            z-index: 999;
         }
-        .sidebar.active { left: 0; }
-        .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gold); padding-bottom: 15px; margin-bottom: 20px; color: var(--gold); }
-        .sidebar-links { list-style: none; padding: 0; }
-        .sidebar-links li { margin-bottom: 10px; }
-        .sidebar-links a { text-decoration: none; color: var(--gold); font-weight: 600; display: block; padding: 12px; border-radius: 5px; transition: 0.3s; }
-        .sidebar-links a:hover { background: var(--gold); color: var(--primary); }
 
-        /* Hero */
-        .hero { background: var(--white); padding: 40px 5%; text-align: center; border-bottom: 1px solid #ddd; }
-        .hero h1 { margin: 0; font-size: 2rem; color: var(--primary); }
-
-        /* Product Grid */
-        .container { padding: 20px 5%; }
-        .product-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 15px; 
+        .category-nav button {
+            background: none;
+            border: 1px solid transparent;
+            color: white;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-size: 0.85rem;
         }
+
+        .category-nav button:hover, .category-nav button.active {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+        }
+
+        .hero { 
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('hero-bg.jpg');
+            background-color: #111;
+            background-size: cover;
+            background-position: center;
+            padding: 60px 10%; 
+            text-align: center; 
+            color: var(--white);
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .hero-logo { height: 100px; width: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 15px; }
+        .hero h1 { margin: 10px 0; font-size: 2.5rem; letter-spacing: 2px; }
+        .hero h1 span { color: var(--gold); }
+        .hero .motto { color: var(--gold); font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; display: block; margin-bottom: 15px; }
+        .hero .welcome-note { max-width: 650px; margin: 0 auto; color: #ccc; line-height: 1.6; }
+
+        .container { padding: 30px 5%; }
+
+        .product-panel {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: var(--panel-shadow);
+            border: 1px solid #eee;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .panel-header h2 { margin: 0; font-size: 1.5rem; color: var(--primary); text-transform: uppercase; font-weight: 800; }
+        .new-badge { background: #ff3e3e; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; vertical-align: middle; margin-left: 10px; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         @media (min-width: 768px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
 
-        .card { background: var(--white); border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #eee; transition: 0.3s; }
-        .card:hover { border-color: var(--gold); transform: translateY(-3px); }
-        .card img { width: 100%; height: 200px; object-fit: cover; }
+        .card { background: #fff; border-radius: 8px; overflow: hidden; transition: 0.3s; border: 1px solid #f0f0f0; position: relative; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 230px; object-fit: cover; }
         .details { padding: 15px; text-align: center; }
-        .price { font-size: 1.1rem; font-weight: 800; color: var(--dark-gold); margin: 8px 0; }
+        .price { font-weight: 800; color: var(--dark-gold); margin: 5px 0; font-size: 1.1rem; }
         
-        .btn-add { 
-            background: var(--gold); color: var(--primary); border: none; 
-            padding: 10px; width: 100%; border-radius: 5px; cursor: pointer; font-weight: bold; 
-        }
+        .btn-add { background: var(--gold); color: var(--primary); border: none; padding: 10px; width: 100%; border-radius: 4px; cursor: pointer; font-weight: bold; }
 
-        /* Cart Sidebar */
-        #cart-sidebar {
-            position: fixed; right: -400px; top: 0; width: 320px; height: 100%;
-            background: var(--white); box-shadow: -5px 0 20px rgba(0,0,0,0.2);
-            transition: 0.4s; z-index: 4000; padding: 25px; display: flex; flex-direction: column;
+        .hidden { display: none; }
+
+        /* SIDEBARS */
+        #cart-sidebar { 
+            position: fixed; 
+            right: -400px; 
+            top: 0; 
+            width: 320px; 
+            height: 100%; 
+            background: #fff; 
+            z-index: 4000; 
+            padding: 25px; 
+            transition: 0.4s; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1); 
         }
         #cart-sidebar.active { right: 0; }
-        .btn-checkout { background: #25D366; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; }
-
+        
+        .sidebar { position: fixed; left: -300px; top: 0; width: 280px; height: 100%; background: var(--primary); z-index: 3000; padding: 20px; transition: 0.4s; }
+        .sidebar.active { left: 0; }
+        
         #overlay { position: fixed; display: none; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2500; }
         #overlay.active { display: block; }
-        
-        footer { background: var(--primary); color: var(--gold); padding: 30px; text-align: center; margin-top: 50px; }
+
+        footer { background: var(--primary); color: var(--gold); padding: 40px; text-align: center; }
     </style>
 </head>
 <body>
 
     <nav>
         <div style="display: flex; align-items: center; gap: 15px;">
-            <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+            <div onclick="toggleSidebar()" style="cursor:pointer; font-size:1.5rem">☰</div>
             <div class="logo-container">
                 <span class="brand-name">LEGACY OUTFIT</span>
                 <img src="logo.jpg" alt="Logo" class="brand-logo">
@@ -113,63 +171,113 @@
         </div>
     </nav>
 
-    <div id="side-menu" class="sidebar">
-        <div class="sidebar-header">
-            <h3>LEGACY MENU</h3>
-            <span style="cursor:pointer; font-size:1.5rem" onclick="toggleSidebar()">&times;</span>
-        </div>
-        <ul class="sidebar-links">
-            <li><a href="#" onclick="toggleSidebar()">Nyumbani</a></li>
-            <li><a href="#suti" onclick="toggleSidebar()">Suti za Kiume</a></li>
-            <li><a href="#casual" onclick="toggleSidebar()">Casual Wear</a></li>
-            <li><a href="#shoes" onclick="toggleSidebar()">Viatu</a></li>
-            <hr style="border: 0.5px solid var(--gold); opacity: 0.2;">
-           <li>
-    <a href="javascript:void(0)" onclick="contactSupport()">Msaada / Contact</a>
-</li>
-        </ul>
-    </div>
-
-    <div id="overlay" onclick="toggleSidebar()"></div>
-
-    <div id="cart-sidebar">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #eee; padding-bottom:10px;">
-            <h3>Kikapu Chako</h3>
-            <span style="cursor:pointer; color:red" onclick="toggleCart()">Funga &times;</span>
-        </div>
-        <div id="cart-items-list" style="flex-grow:1; overflow-y:auto; padding:10px 0;"></div>
-        <div class="total-price" id="cart-total" style="font-size:1.2rem; text-align:center; border-top:1px solid #eee; padding-top:10px;">Jumla: TZS 0</div>
-        <button class="btn-checkout" onclick="sendToWhatsApp()">Tuma Oda WhatsApp</button>
+    <div class="category-nav">
+        <button class="active" onclick="filterCategory('all', this)">All Collections</button>
+        <button onclick="filterCategory('new', this)">New Arrivals</button>
+        <button onclick="filterCategory('suits', this)">Suits</button>
+        <button onclick="filterCategory('shoes', this)">Shoes</button>
+        <button onclick="filterCategory('sports', this)">Sports Wear</button>
+        <button onclick="filterCategory('casual', this)">Casual Wear</button>
+        <button onclick="filterCategory('women', this)">Women</button>
     </div>
 
     <section class="hero">
-        <h1>Vaa Kijanja na Legacy Outfits</h1>
-        <p>Fashion ya Kifahari kwa Bei Nafuu.</p>
+        <img src="logo.jpg" alt="Legacy Logo" class="hero-logo">
+        <span class="motto">QUALITY AND ELEGANCE</span>
+        <h1>Welcome to <span>Legacy Outfits</span></h1>
+        <p class="welcome-note">Premium fashion for the modern era. From executive boardroom suits to elite gym performance gear.</p>
     </section>
 
     <div class="container">
-        <h2 id="suti" style="color:var(--primary); border-left: 5px solid var(--gold); padding-left: 10px;">SUTI ZA KIUME</h2>
-        <div class="product-grid" id="suti-list"></div>
+        <div id="panel-new" class="product-panel">
+            <div class="panel-header">
+                <h2>New Arrivals <span class="new-badge">HOT</span></h2>
+            </div>
+            <div class="product-grid" id="new-list"></div>
+        </div>
 
-        <h2 id="casual" style="color:var(--primary); border-left: 5px solid var(--gold); padding-left: 10px; margin-top: 40px;">CASUAL WEAR</h2>
-        <div class="product-grid" id="casual-list"></div>
+        <div id="panel-sports" class="product-panel">
+            <div class="panel-header"><h2>Performance Sports Wear</h2></div>
+            <div class="product-grid" id="sports-list"></div>
+        </div>
+
+        <div id="panel-suits" class="product-panel">
+            <div class="panel-header"><h2>Suits Collection</h2></div>
+            <div class="product-grid" id="suits-list"></div>
+        </div>
+
+        <div id="panel-shoes" class="product-panel">
+            <div class="panel-header"><h2>Footwear</h2></div>
+            <div class="product-grid" id="shoes-list"></div>
+        </div>
+
+        <div id="panel-casual" class="product-panel">
+            <div class="panel-header"><h2>Casual Essentials</h2></div>
+            <div class="product-grid" id="casual-list"></div>
+        </div>
+
+        <div id="panel-women" class="product-panel">
+            <div class="panel-header"><h2>Women's Selection</h2></div>
+            <div class="product-grid" id="women-list"></div>
+        </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 Legacy Outfits | Arusha, Tanzania</p>
-    </footer>
+    <div id="side-menu" class="sidebar">
+        <div style="color:var(--gold); display:flex; justify-content:space-between; margin-bottom:20px;">
+            <h3>MENU</h3>
+            <span onclick="toggleSidebar()" style="cursor:pointer; font-size:1.5rem">&times;</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:15px;">
+            <a href="#" onclick="toggleSidebar()" style="color:var(--gold); text-decoration:none;">Home</a>
+            <a href="javascript:void(0)" onclick="contactSupport()" style="color:var(--gold); text-decoration:none;">Contact Support</a>
+        </div>
+    </div>
+
+    <div id="overlay" onclick="closeAll()"></div>
+
+    <div id="cart-sidebar">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h3 style="margin:0;">Your Cart</h3>
+            <span onclick="toggleCart()" style="cursor:pointer; font-size:2rem; font-weight:bold;">&times;</span>
+        </div>
+        <div id="cart-items-list" style="flex-grow:1; overflow-y:auto; border-top:1px solid #eee; padding-top:10px;"></div>
+        <div id="cart-total" style="text-align:center; padding:15px; font-weight:800; font-size:1.2rem;">Total: TZS 0</div>
+        <button style="background:#25D366; color:white; border:none; padding:15px; border-radius:8px; font-weight:bold; cursor:pointer;" onclick="sendToWhatsApp()">Send WhatsApp Order</button>
+    </div>
+
+    <footer><p>&copy; 2026 Legacy Outfits | Arusha, Tanzania</p></footer>
 
     <script>
         const products = [
-            { id: 1, name: "Suti ya Harusi (Slim Fit)", price: 250000, img: "sutinyeusi.jpg", grid: "suti-list" },
-            { id: 2, name: "Suti ya Kijivu", price: 180000, img: "sutiyakijivu.jpg", grid: "suti-list" },
-            { id: 3, name: "T-Shirt ya Polo", price: 35000, img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500", grid: "casual-list" },
-            { id: 4, name: "Raba za Nike (Air)", price: 120000, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", grid: "casual-list" }
+            { id: 101, name: "Double Breasted Navy", price: 320000, img: "https://images.unsplash.com/photo-1594932224828-b4b059b6ffc0?w=500", category: "new", grid: "new-list" },
+            { id: 102, name: "Elite Performance Tracksuit", price: 85000, img: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=500", category: "new", grid: "new-list" },
+            { id: 17, name: "Premium Gym Set", price: 65000, img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500", category: "sports", grid: "sports-list" },
+            { id: 18, name: "Pro Running Shorts", price: 30000, img: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500", category: "sports", grid: "sports-list" },
+            { id: 19, name: "Compression T-Shirt", price: 35000, img: "https://images.unsplash.com/photo-1534367507873-d2d7e24c79d2?w=500", category: "sports", grid: "sports-list" },
+            { id: 20, name: "Athletic Leggings", price: 45000, img: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=500", category: "sports", grid: "sports-list" },
+            { id: 1, name: "Wedding Suit (Slim Fit)", price: 250000, img: "sutinyeusi.jpg", category: "suits", grid: "suits-list" },
+            { id: 2, name: "Grey Executive Suit", price: 180000, img: "sutiyakijivu.jpg", category: "suits", grid: "suits-list" },
+            { id: 3, name: "Classic Tuxedo", price: 450000, img: "https://images.unsplash.com/photo-1593032465175-481ac7f401a0?w=500", category: "suits", grid: "suits-list" },
+            { id: 4, name: "Royal Blue 3-Piece", price: 300000, img: "https://images.unsplash.com/photo-1598808503744-3ede65293673?w=500", category: "suits", grid: "suits-list" },
+            { id: 5, name: "Nike Air Max", price: 120000, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", category: "shoes", grid: "shoes-list" },
+            { id: 6, name: "Official Leather Shoes", price: 85000, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=500", category: "shoes", grid: "shoes-list" },
+            { id: 7, name: "Chelsea Boots", price: 95000, img: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=500", category: "shoes", grid: "shoes-list" },
+            { id: 8, name: "White Street Sneakers", price: 65000, img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500", category: "shoes", grid: "shoes-list" },
+            { id: 9, name: "Polo T-Shirt", price: 35000, img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500", category: "casual", grid: "casual-list" },
+            { id: 10, name: "Designer Jeans", price: 45000, img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500", category: "casual", grid: "casual-list" },
+            { id: 11, name: "Linen Summer Shirt", price: 40000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500", category: "casual", grid: "casual-list" },
+            { id: 12, name: "Bomber Jacket", price: 75000, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500", category: "casual", grid: "casual-list" },
+            { id: 13, name: "Evening Gown", price: 95000, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500", category: "women", grid: "women-list" },
+            { id: 14, name: "Ladies Office Wear", price: 75000, img: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500", category: "women", grid: "women-list" },
+            { id: 15, name: "Silk Wrap Dress", price: 110000, img: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500", category: "women", grid: "women-list" },
+            { id: 16, name: "Leather Handbag", price: 120000, img: "https://images.unsplash.com/photo-1584917033904-491bb7ac3fe1?w=500", category: "women", grid: "women-list" }
         ];
 
         let cart = [];
 
         function displayProducts() {
+            const grids = ["new-list", "sports-list", "suits-list", "shoes-list", "casual-list", "women-list"];
+            grids.forEach(g => document.getElementById(g).innerHTML = "");
             products.forEach(p => {
                 const target = document.getElementById(p.grid);
                 if(target) {
@@ -179,7 +287,7 @@
                             <div class="details">
                                 <h3>${p.name}</h3>
                                 <p class="price">TZS ${p.price.toLocaleString()}</p>
-                                <button class="btn-add" onclick="addToCart(${p.id})">Weka Kikapuni</button>
+                                <button class="btn-add" onclick="addToCart(${p.id})">Add to Cart</button>
                             </div>
                         </div>
                     `;
@@ -188,6 +296,30 @@
         }
         displayProducts();
 
+        function filterCategory(category, button) {
+            const buttons = document.querySelectorAll('.category-nav button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if(button) button.classList.add('active');
+
+            const panels = {
+                new: document.getElementById('panel-new'),
+                sports: document.getElementById('panel-sports'),
+                suits: document.getElementById('panel-suits'),
+                shoes: document.getElementById('panel-shoes'),
+                casual: document.getElementById('panel-casual'),
+                women: document.getElementById('panel-women')
+            };
+
+            if (category === 'all') {
+                Object.values(panels).forEach(p => p.classList.remove('hidden'));
+            } else {
+                Object.keys(panels).forEach(key => {
+                    panels[key].classList.toggle('hidden', key !== category);
+                });
+            }
+        }
+
+        // Toggles
         function toggleSidebar() {
             document.getElementById('side-menu').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
@@ -195,8 +327,16 @@
 
         function toggleCart() {
             document.getElementById('cart-sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
         }
 
+        function closeAll() {
+            document.getElementById('side-menu').classList.remove('active');
+            document.getElementById('cart-sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        // Cart Logic
         function addToCart(id) {
             const item = products.find(p => p.id === id);
             cart.push(item);
@@ -207,16 +347,15 @@
             document.getElementById('cart-count').innerText = cart.length;
             const listEl = document.getElementById('cart-items-list');
             listEl.innerHTML = "";
-            let total = 0;
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
             cart.forEach((item, index) => {
-                total += item.price;
                 listEl.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; background:#f9f9f9; padding:8px; margin-bottom:5px; border-radius:5px; font-size:0.8rem">
-                        <span>${item.name}</span>
-                        <span style="color:red; cursor:pointer" onclick="removeFromCart(${index})">Ondoa</span>
-                    </div>`;
+                <div style="display:flex; justify-content:space-between; padding:10px; background:#f9f9f9; margin-bottom:5px; border-radius:5px; align-items:center;">
+                    <span style="font-size:0.9rem">${item.name}</span>
+                    <span style="color:red; cursor:pointer; font-weight:bold; font-size:1.2rem;" onclick="removeFromCart(${index})">&times;</span>
+                </div>`;
             });
-            document.getElementById('cart-total').innerText = `Jumla: TZS ${total.toLocaleString()}`;
+            document.getElementById('cart-total').innerText = `Total: TZS ${total.toLocaleString()}`;
         }
 
         function removeFromCart(index) {
@@ -225,22 +364,16 @@
         }
 
         function sendToWhatsApp() {
-            if (cart.length === 0) return alert("Kikapu kiko wazi!");
-            let items = cart.map((item, i) => `${i+1}. *${item.name}* (TZS ${item.price.toLocaleString()})`).join('\n');
+            if (cart.length === 0) return alert("Your cart is empty!");
+            let items = cart.map((item, i) => `${i+1}. ${item.name}`).join('\n');
             let total = cart.reduce((s, i) => s + i.price, 0);
-            const msg = encodeURIComponent(`*ODA MPYA - LEGACY OUTFIT*\n\n${items}\n\n*JUMLA: TZS ${total.toLocaleString()}*\n\nJe, hizi zinapatikana?`);
+            const msg = encodeURIComponent(`*LEGACY OUTFIT ORDER*\n\n${items}\n\n*Total: TZS ${total.toLocaleString()}*`);
             window.open(`https://wa.me/255680558422?text=${msg}`, '_blank');
         }
+
         function contactSupport() {
-    const myPhone = "255680558422"; // Namba yako ya duka
-    const message = encodeURIComponent("Habari Legacy Outfit, nahitaji msaada kuhusu bidhaa zenu.");
-    
-    // Inafunga sidebar kwanza kabla ya kufungua WhatsApp
-    toggleSidebar(); 
-    
-    // Inafungua WhatsApp
-    window.open(`https://wa.me/${myPhone}?text=${message}`, '_blank');
-}
+            window.open(`https://wa.me/255680558422?text=Hello, I need assistance with Legacy Outfits.`, '_blank');
+        }
     </script>
 </body>
 </html>
