@@ -174,9 +174,9 @@
     <div class="category-nav">
         <button class="active" onclick="filterCategory('all', this)">All Collections</button>
         <button onclick="filterCategory('new', this)">New Arrivals</button>
+        <button onclick="filterCategory('sports', this)">Sports Wear</button>
         <button onclick="filterCategory('suits', this)">Suits</button>
         <button onclick="filterCategory('shoes', this)">Shoes</button>
-        <button onclick="filterCategory('sports', this)">Sports Wear</button>
         <button onclick="filterCategory('casual', this)">Casual Wear</button>
         <button onclick="filterCategory('women', this)">Women</button>
     </div>
@@ -248,36 +248,28 @@
     <footer><p>&copy; 2026 Legacy Outfits | Arusha, Tanzania</p></footer>
 
     <script>
-        const products = [
-            { id: 101, name: "Double Breasted Navy", price: 320000, img: "navy-stripe-double-breasted-suit-jacket.jpg", category: "new", grid: "new-list" },
-            { id: 102, name: "Elite Performance Tracksuit", price: 85000, img: "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=500", category: "new", grid: "new-list" },
-            { id: 17, name: "Premium Gym Set", price: 65000, img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500", category: "sports", grid: "sports-list" },
-            { id: 18, name: "Pro Running Shorts", price: 30000, img: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=500", category: "sports", grid: "sports-list" },
-            { id: 19, name: "Compression T-Shirt", price: 35000, img: "Compression T-Shirt.jpg", category: "sports", grid: "sports-list" },
-            { id: 20, name: "Athletic Leggings", price: 45000, img: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=500", category: "sports", grid: "sports-list" },
-            { id: 1, name: "Wedding Suit (Slim Fit)", price: 250000, img: "sutinyeusi.jpg", category: "suits", grid: "suits-list" },
-            { id: 2, name: "Grey Executive Suit", price: 180000, img: "sutiyakijivu.jpg", category: "suits", grid: "suits-list" },
-            { id: 3, name: "Classic Tuxedo", price: 450000, img: "https://images.unsplash.com/photo-1593032465175-481ac7f401a0?w=500", category: "suits", grid: "suits-list" },
-            { id: 4, name: "Royal Blue 3-Piece", price: 300000, img: "Royal Blue 3-Piece.jpg", category: "suits", grid: "suits-list" },
-            { id: 5, name: "Nike Air Max", price: 120000, img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", category: "shoes", grid: "shoes-list" },
-            { id: 6, name: "Official Leather Shoes", price: 85000, img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=500", category: "shoes", grid: "shoes-list" },
-            { id: 7, name: "Chelsea Boots", price: 95000, img: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?w=500", category: "shoes", grid: "shoes-list" },
-            { id: 8, name: "White Street Sneakers", price: 65000, img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500", category: "shoes", grid: "shoes-list" },
-            { id: 9, name: "Polo T-Shirt", price: 35000, img: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=500", category: "casual", grid: "casual-list" },
-            { id: 10, name: "Designer Jeans", price: 45000, img: "https://images.unsplash.com/photo-1542272604-787c3835535d?w=500", category: "casual", grid: "casual-list" },
-            { id: 11, name: "Linen Summer Shirt", price: 40000, img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500", category: "casual", grid: "casual-list" },
-            { id: 12, name: "Bomber Jacket", price: 75000, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500", category: "casual", grid: "casual-list" },
-            { id: 13, name: "Evening Gown", price: 95000, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500", category: "women", grid: "women-list" },
-            { id: 14, name: "Ladies Office Wear", price: 75000, img: "https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500", category: "women", grid: "women-list" },
-            { id: 15, name: "Silk Wrap Dress", price: 110000, img: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=500", category: "women", grid: "women-list" },
-            { id: 16, name: "Leather Handbag", price: 120000, img: "Leather Handbag.jpg", category: "women", grid: "women-list" }
-        ];
-
+        let products = [];
         let cart = [];
+
+        // Mfumo wa kuvuta bidhaa kutoka kwenye faili la JSON kwa ajili ya CMS
+        async function loadProducts() {
+            try {
+                const response = await fetch('products.json');
+                if (!response.ok) throw new Error('Imeshindwa kupata products.json');
+                products = await response.json();
+                displayProducts();
+            } catch (error) {
+                console.error("Makosa ya kupakia bidhaa:", error);
+            }
+        }
 
         function displayProducts() {
             const grids = ["new-list", "sports-list", "suits-list", "shoes-list", "casual-list", "women-list"];
-            grids.forEach(g => document.getElementById(g).innerHTML = "");
+            grids.forEach(g => {
+                const el = document.getElementById(g);
+                if(el) el.innerHTML = "";
+            });
+            
             products.forEach(p => {
                 const target = document.getElementById(p.grid);
                 if(target) {
@@ -294,7 +286,9 @@
                 }
             });
         }
-        displayProducts();
+
+        // Piga picha ya loadProducts kuanza kazi website ikifunguka
+        loadProducts();
 
         function filterCategory(category, button) {
             const buttons = document.querySelectorAll('.category-nav button');
@@ -311,15 +305,14 @@
             };
 
             if (category === 'all') {
-                Object.values(panels).forEach(p => p.classList.remove('hidden'));
+                Object.values(panels).forEach(p => { if(p) p.classList.remove('hidden'); });
             } else {
                 Object.keys(panels).forEach(key => {
-                    panels[key].classList.toggle('hidden', key !== category);
+                    if(panels[key]) panels[key].classList.toggle('hidden', key !== category);
                 });
             }
         }
 
-        // Toggles
         function toggleSidebar() {
             document.getElementById('side-menu').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
@@ -336,11 +329,12 @@
             document.getElementById('overlay').classList.remove('active');
         }
 
-        // Cart Logic
         function addToCart(id) {
             const item = products.find(p => p.id === id);
-            cart.push(item);
-            updateCartUI();
+            if(item) {
+                cart.push(item);
+                updateCartUI();
+            }
         }
 
         function updateCartUI() {
@@ -358,6 +352,7 @@
             document.getElementById('cart-total').innerText = `Total: TZS ${total.toLocaleString()}`;
         }
 
+        // Mfumo wa kufuta bidhaa moja moja kwenye Cart
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCartUI();
