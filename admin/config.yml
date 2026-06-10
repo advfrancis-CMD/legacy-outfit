@@ -1,0 +1,23 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "/"
+public_folder: "/"
+
+collections:
+  - name: "products"
+    label: "Bidhaa (Products)"
+    label_singular: "Bidhaa"
+    file: "products.json"
+    extension: "json"
+    format: "json"
+    create: true
+    slug: "{{fields.slug}}"
+    fields:
+      - { label: "ID ya Bidhaa (Namba ya kipekee)", name: "id", widget: "number", value_type: "int" }
+      - { label: "Jina la Bidhaa", name: "name", widget: "string" }
+      - { label: "Bei (TZS)", name: "price", widget: "number", value_type: "int" }
+      - { label: "Picha ya Bidhaa (Jina la faili au URL)", name: "img", widget: "image" }
+      - { label: "Category (Mfano: suits, sports, shoes)", name: "category", widget: "string" }
+      - { label: "Grid ID (Weka: suits-list, sports-list, shoes-list, new-list, casual-list, au women-list)", name: "grid", widget: "string" }
